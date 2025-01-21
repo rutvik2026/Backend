@@ -1,0 +1,14 @@
+.register{
+    width: 30vw;
+    border: 1px solid black;
+    border-radius: 2rem;
+    height: 95vh;
+}
+.login{
+    margin-top: 10vh;
+     width: 30vw;
+    border: 1px solid black;
+    border-radius: 2rem;
+    height: 60vh;
+    text-align: center;
+}
