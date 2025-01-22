@@ -2,7 +2,7 @@
   "name": "foodapoint2.0",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "Server.js",
   "scripts": {
     "start": "node Server.js",
     "server": "nodemon Server.js",
