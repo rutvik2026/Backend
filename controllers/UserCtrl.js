@@ -588,6 +588,6 @@ module.exports = {
   appointmentsControl,
   removeAppointmentController,
   updatestatusappointmentController,
-  PaymentGateway,
-  paymentStatus,
+  OrderCreate,
+  GetOrder, 
 };
