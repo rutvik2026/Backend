@@ -522,122 +522,57 @@ const makePaymentRequestWithRetry = async (
   }
 };
 
-const PaymentGateway = async (req, res) => {
-  function generateTransactionId() {
-    const timestamp = Date.now();
-    const randomNum = Math.floor(Math.random() * 100000);
-    return `${timestamp}-${randomNum}`;
-  }
 
-  try {
-    const { username, appointmentPrice, number } = req.body;
+const OrderCreate = async(req,res)=>{
+  console.log("Server received request body:", req.body);
+  const razorpay = new Razorpay({
+    key_id: "rzp_live_H2YbNsMpB8KRqc",
+    key_secret: "EnYN4wKflp37qha3T25lShdA", 
+  });
+  console.log("server side amt", req.body);
+ const options={
+  amount:req.body.amount,
+  currency:"INR",
+  receipt:"receipt#1",
+  payment_capture:1
+ }
+ try {
+  const response=await razorpay.orders.create(options);
+  res.json({
+    order_id:response.id,
+    currency:response.currency,
+    amount:response.amount
+  })
+ } catch (error) {
+  res.send(400,error);
+  console.log("Error dureing creation payment order",error);
+ }
+}
 
-    if (!username || !appointmentPrice || !number) {
-      return res.status(400).json({ error: "Invalid input data" });
+const GetOrder = async(res,req)=>{
+   const {payment_id}=req.params;
+    const razorpay = new Razorpay({
+      key_id: "rzp_live_H2YbNsMpB8KRqc",
+      key_secret: "EnYN4wKflp37qha3T25lShdA",
+    });
+
+    try {
+      const payment=await razorpay.payments.fetch(payment_id);
+      if(!payment){
+        return res.status(500).json("Error at razorpay loading");
+      }
+
+      res.json({
+        status: payment.status,
+        method:payment.method,
+        amount:payment.amount,
+        currency:payment.currency
+      })
+
+    } catch (error) {
+      console.log("error in get order",error)
     }
-
-    const data = {
-      merchantId: "MERCHANTUAT",
-      merchantTransactionId: generateTransactionId(),
-      merchantUserId: "MU933037302229373",
-      amount: appointmentPrice * 100,
-      callbackUrl: "https://webhook.site/callback-url",
-      mobileNumber: number,
-      deviceContext: {
-        deviceOS: "ANDROID",
-      },
-      paymentInstrument: {
-        type: "UPI_INTENT",
-        targetApp: "com.phonepe.app",
-      },
-    };
-
-    const payload = JSON.stringify(data);
-    const payloadMain = Buffer.from(payload).toString("base64");
-    const key = "099eb0cd-02cf-4e2a-8aca-3e6c6aff0399";
-    const keyIndex = 1;
-    const string = `${payloadMain}/pg/v1/pay${key}`;
-    const sha256 = crypto.createHash("sha256").update(string).digest("hex");
-    const checksum = `${sha256}###${keyIndex}`;
-
-    const options = {
-      method: "POST",
-      url: "https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/pay",
-      headers: {
-        accept: "application/json",
-        "Content-Type": "application/json",
-        "X-VERIFY": checksum,
-      },
-      data: {
-        request: payloadMain,
-      },
-    };
-
-    // Retry logic for rate-limiting
-    const response = await makePaymentRequestWithRetry(options);
-
-    if (
-      response.data &&
-      response.data.data &&
-      response.data.data.instrumentResponse.redirectInfo
-    ) {
-      return res.redirect(
-        response.data.data.instrumentResponse.redirectInfo.url
-      );
-    } else {
-      console.error("Invalid response format", response.data);
-      res.status(500).send("Payment gateway error.");
-    }
-  } catch (error) {
-    console.error("Error in payment gateway", error.response?.data || error);
-    res.status(500).send("An error occurred during payment processing.");
-  }
-};
-
-
-
-
-
-const paymentStatus = async (req, res) => {
-  try {
-    const { merchantId, merchantTransactionId } = req.body;
-
-    if (!merchantId || !merchantTransactionId) {
-      return res.status(400).json({ error: "Missing required parameters" });
-    }
-
-    const key = process.env.PHONEPE_KEY;
-    const keyIndex = process.env.PHONEPE_KEY_INDEX || 1;
-
-    const string = `${merchantId}${merchantTransactionId}/pg/v1/status${key}`;
-    const sha256 = crypto.createHash("sha256").update(string).digest("hex");
-    const checksum = `${sha256}###${keyIndex}`;
-
-    const URL = `https://api-preprod.phonepe.com/apis/pg-sandbox/pg/v1/status/${merchantId}/${merchantTransactionId}`;
-
-    const options = {
-      method: "GET",
-      url: URL,
-      headers: {
-        accept: "application/json",
-        "Content-Type": "application/json",
-        "X-VERIFY": checksum,
-        "X-MERCHANT-ID": merchantId,
-      },
-    };
-
-    const response = await axios.request(options);
-    return res.status(200).json(response.data);
-  } catch (error) {
-    console.error("Error in payment status:", error.response?.data || error);
-    res
-      .status(500)
-      .json({ error: "An error occurred while fetching payment status." });
-  }
-};
-
-
-
+}
 
 module.exports = {
   loginController,
