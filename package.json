@@ -4,7 +4,7 @@
   "description": "",
   "main": "Server.js",
   "scripts": {
-  "start": "npm install && node Server.js",  // Ensure install happens before running server
+  "start": "npm install && node Server.js", 
   "server": "nodemon Server.js",
   "test": "mocha",
   "postinstall": "npm install"
