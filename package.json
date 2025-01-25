@@ -4,10 +4,11 @@
   "description": "",
   "main": "Server.js",
   "scripts": {
-    "start": "node Server.js",
-    "server": "nodemon Server.js",
-    "test": "mocha"
-  },
+  "start": "npm install && node Server.js",  // Ensure install happens before running server
+  "server": "nodemon Server.js",
+  "test": "mocha",
+  "postinstall": "npm install"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
