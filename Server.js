@@ -35,6 +35,7 @@ if (!searchValue) {
     } else {
       // Return all owners if no search value is provided
       owners = await ownerModel.find();
+      console.log("the initial restorant featch");
     }
 
     res.json(owners);
