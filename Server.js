@@ -22,16 +22,19 @@ app.get("/", (req, res) => {
   });
 });
 app.get("/api/owners", async (req, res) => {
- const searchValue = req.query.q; // Get the search query from URL
-
+ const searchValue = req.query.q || ""; // Get the search query from URL
+if (!searchValue) {
+  // Handle empty query scenario (e.g., return all owners or a meaningful response)
+  return res.status(200).json({ data: [] });
+}
   try {
     let owners;
     if (searchValue) {
       // Search by menu items if a search value is provided
-      owners = await Owner.find({ menu: { $regex: searchValue, $options: 'i' } });
+      owners = await ownerModel.find({ menu: { $regex: searchValue, $options: 'i' } });
     } else {
       // Return all owners if no search value is provided
-      owners = await Owner.find({});
+      owners = await ownerModel.find({});
     }
 
     res.json(owners);
