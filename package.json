@@ -4,8 +4,8 @@
   "description": "",
   "main": "Server.js",
  "scripts": {
-  "start": "node Server.js",  // Just start the server, assume dependencies are installed
-  "server": "nodemon Server.js", // For development with live-reload
+  "start": "node Server.js",  
+  "server": "nodemon Server.js", 
   "test": "mocha",
   "postinstall": "echo 'Dependencies installed, no need for npm install here.'"
 },
