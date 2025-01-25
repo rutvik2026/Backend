@@ -34,7 +34,7 @@ if (!searchValue) {
       owners = await ownerModel.find({ menu: { $regex: searchValue, $options: 'i' } });
     } else {
       // Return all owners if no search value is provided
-      owners = await ownerModel.find({});
+      owners = await ownerModel.find();
     }
 
     res.json(owners);
