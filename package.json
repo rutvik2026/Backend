@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "Server.js",
-  "scripts": {
-  "start": "npm install && node Server.js", 
-  "server": "nodemon Server.js",
+ "scripts": {
+  "start": "node Server.js",  // Just start the server, assume dependencies are installed
+  "server": "nodemon Server.js", // For development with live-reload
   "test": "mocha",
-  "postinstall": "npm install"
+  "postinstall": "echo 'Dependencies installed, no need for npm install here.'"
 },
   "keywords": [],
   "author": "",
