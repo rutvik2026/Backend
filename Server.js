@@ -22,16 +22,22 @@ app.get("/", (req, res) => {
   });
 });
 app.get("/api/owners", async (req, res) => {
-  try {
-    const owners = await ownerModel.find();
+ const searchValue = req.query.q; // Get the search query from URL
 
-    if (!owners.length) {
-      return res.status(404).json({ message: "No owners found" });
+  try {
+    let owners;
+    if (searchValue) {
+      // Search by menu items if a search value is provided
+      owners = await Owner.find({ menu: { $regex: searchValue, $options: 'i' } });
+    } else {
+      // Return all owners if no search value is provided
+      owners = await Owner.find({});
     }
-    res.status(200).json(owners);
+
+    res.json(owners);
   } catch (error) {
-    console.error("Error:", error.message);
-    res.status(500).json({ error: "Internal Server Error" });
+    console.error(error);
+    res.status(500).send('Server error');
   }
 });
 
