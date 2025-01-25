@@ -21,7 +21,7 @@ app.get("/", (req, res) => {
     message: "server running",
   });
 });
-app.get("/api/owners", async (req, res) => {
+app.get("/api/owners/home", async (req, res) => {
  const searchValue = req.query.q; // Get the search query from URL
 if (!searchValue) {
   // Handle empty query scenario (e.g., return all owners or a meaningful response)
@@ -44,7 +44,19 @@ if (!searchValue) {
     res.status(500).send('Server error');
   }
 });
+app.get("/api/owners", async (req, res) => {
+  try {
+    const owners = await ownerModel.find();
 
+    if (!owners.length) {
+      return res.status(404).json({ message: "No owners found" });
+    }
+    res.status(200).json(owners);
+  } catch (error) {
+    console.error("Error:", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 app.get("/api/", (req, res) => {
   res.status(200).send({
     message: "server running2",
