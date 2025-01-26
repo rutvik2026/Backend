@@ -29,13 +29,13 @@ if (!searchValue) {
   return res.status(200).json({ data: [] });
 }
   try {
-    let owners;
+  
     if (searchValue) {
       // Search by menu items if a search value is provided
-      owners = await ownerModel.find({ menu: { $regex: searchValue, $options: 'i' } });
+   const owners = await ownerModel.find({ menu: { $regex: searchValue, $options: 'i' } });
     } else {
       // Return all owners if no search value is provided
-      owners = await ownerModel.find();
+     const owners = await ownerModel.find();
       console.log("the initial restorant featch");
     }
 
