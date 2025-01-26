@@ -23,6 +23,7 @@ app.get("/", (req, res) => {
 });
 app.get("/api/owners/home", async (req, res) => {
  const searchValue = req.query.q; // Get the search query from URL
+  console.log("menu query", req.query.q);
 if (!searchValue) {
   // Handle empty query scenario (e.g., return all owners or a meaningful response)
   return res.status(200).json({ data: [] });
@@ -58,27 +59,9 @@ app.get("/api/owners", async (req, res) => {
   }
 });
 app.get("/api/", (req, res) => {
-  const searchValue = req.query.q; // Get the search query from URL
-if (!searchValue) {
-  // Handle empty query scenario (e.g., return all owners or a meaningful response)
-  return res.status(200).json({ data: [] });
-}
-  try {
-    let owners;
-    if (searchValue) {
-      // Search by menu items if a search value is provided
-      owners = await ownerModel.find({ menu: { $regex: searchValue, $options: 'i' } });
-    } else {
-      // Return all owners if no search value is provided
-      owners = await ownerModel.find();
-      console.log("the initial restorant featch");
-    }
-
-    res.json(owners);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Server error');
-  }
+   res.status(200).send({
+    message: "server running2",
+  });
 });
 
 app.use("/api/v1/user", require("./routes/UserRoute.js"));
