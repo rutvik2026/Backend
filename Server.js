@@ -14,7 +14,11 @@ const app = express();
 app.use(bodyParser.json()); // for JSON data
 app.use(express.json());
 app.use(morgan("dev"));
-app.use(cors());
+app.use(cors({
+  origin: "https://rutvik-foodappoint-git-main-rutvik-shivaji-bansodes-projects.vercel.app", // Frontend URL
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true // Allow credentials like cookies (if needed)
+}));
 
 app.get("/", (req, res) => {
   res.status(200).send({
