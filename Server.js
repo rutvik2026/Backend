@@ -22,29 +22,33 @@ app.get("/", (req, res) => {
   });
 });
 app.get("/api/owners/home", async (req, res) => {
- const searchValue = req.query.q; // Get the search query from URL
-  console.log("menu query", req.query.q);
-if (!searchValue) {
-  // Handle empty query scenario (e.g., return all owners or a meaningful response)
-  return res.status(200).json({ data: [] });
-}
+  const searchValue = req.query.q; // Get the search query from the URL
+  console.log("menu query", searchValue);
+
+  if (!searchValue) {
+    // Handle empty query scenario (e.g., return an empty array or a meaningful response)
+    return res.status(200).json({ data: [] });
+  }
+
   try {
-  
+    let owners; // Declare `owners` outside the blocks
+
     if (searchValue) {
       // Search by menu items if a search value is provided
-   const owners = await ownerModel.find({ menu: { $regex: searchValue, $options: 'i' } });
+      owners = await ownerModel.find({ menu: { $regex: searchValue, $options: 'i' } });
     } else {
       // Return all owners if no search value is provided
-     const owners = await ownerModel.find();
-      console.log("the initial restorant featch");
+      owners = await ownerModel.find();
+      console.log("The initial restaurant fetch");
     }
 
-    res.json(owners);
+    res.json(owners); // Send the result back to the client
   } catch (error) {
     console.error(error);
-    res.status(500).send('Server error');
+    res.status(500).send("Server error");
   }
 });
+
 app.get("/api/owners", async (req, res) => {
   try {
     const owners = await ownerModel.find();
