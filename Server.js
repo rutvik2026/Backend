@@ -30,26 +30,14 @@ app.get("/api/owners/home", async (req, res) => {
   const searchValue = req.query.q; // Get the search query from the URL
   console.log("menu query", searchValue);
 
-  if (!searchValue) {
-    // Handle empty query scenario (e.g., return an empty array or a meaningful response)
-    return res.status(200).json({ data: [] });
-  }
-
-  try {
-    let owners; // Declare `owners` outside the blocks
-
-    if (searchValue) {
-      // Search by menu items if a search value is provided
-    owners = await ownerModel.find({
-        menu: { $elemMatch: { itemName: { $regex: searchValue, $options: "i" } } },
-      });
-    } else {
-      // Return all owners if no search value is provided
-      owners = await ownerModel.find();
-      console.log("The initial restaurant fetch");
-    }
-
-    res.json(owners); // Send the result back to the client
+ try {
+    const owners = await ownerModel.find();
+    console.log("All owners:", owners); // Log all documents in the collection
+    res.json(owners);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server error");
+  }// Send the result back to the client
   } catch (error) {
     console.error(error);
     res.status(500).send("Server error");
