@@ -26,6 +26,7 @@ app.get("/", (req, res) => {
     message: "server running",
   });
 });
+
 app.get("/api/owners/home", async (req, res) => {
   const searchValue = req.query.q; // Get the search query from the URL
   console.log("menu query", searchValue);
@@ -37,11 +38,7 @@ app.get("/api/owners/home", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).send("Server error");
-  }// Send the result back to the client
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Server error");
-  }
+  }// Send the result back to the clien
 });
 
 app.get("/api/owners", async (req, res) => {
