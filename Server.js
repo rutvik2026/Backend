@@ -35,7 +35,9 @@ app.get("/api/owners/home", async (req, res) => {
 
     if (searchValue) {
       // Search by menu items if a search value is provided
-      owners = await ownerModel.find({ menu: { $regex: searchValue, $options: 'i' } });
+    owners = await ownerModel.find({
+        menu: { $elemMatch: { itemName: { $regex: searchValue, $options: "i" } } },
+      });
     } else {
       // Return all owners if no search value is provided
       owners = await ownerModel.find();
