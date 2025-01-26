@@ -7,7 +7,7 @@ const connectDb = require("./config/DB");
 const cors = require("cors");
 const UserRoute = require("./routes/UserRoute.js");
 const { ownerModel } = require("./models/OwnerModel.js");
-const path = require('path');
+
 dotenv.config();
 connectDb();
 
@@ -21,9 +21,7 @@ app.use(cors({
   credentials: true // Allow credentials like cookies (if needed)
 }));
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
+
 app.get("/", (req, res) => {
   res.status(200).send({
     message: "server running",
