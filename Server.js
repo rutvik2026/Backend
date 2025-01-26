@@ -32,8 +32,26 @@ app.get("/api/owners/home", async (req, res) => {
   console.log("menu query", searchValue);
 
  try {
-    const owners = await ownerModel.find();
-    console.log("All owners:", owners); // Log all documents in the collection
+    let owners;
+
+    if (!searchValue) {
+      // No search query provided, return all owners with their full menus
+      owners = await ownerModel.find();
+    } else {
+      // Search query exists, find owners with matching menu item names
+      owners = await ownerModel.find({
+        menu: { $elemMatch: { name: { $regex: searchValue, $options: "i" } } },
+      });
+
+      // Filter the menu items to only include those matching the search query
+      owners = owners.map((owner) => ({
+        ...owner.toObject(), // Convert the Mongoose document to a plain object
+        menu: owner.menu.filter((menuItem) =>
+          new RegExp(searchValue, "i").test(menuItem.name)
+        ),
+      }));
+    }
+
     res.json(owners);
   } catch (error) {
     console.error(error);
