@@ -20,7 +20,12 @@ app.use(cors({
       "https://foodappoint-git-main-rutvik-shivaji-bansodes-projects.vercel.app", // Add your new frontend domain
       "https://rutvik-foodappoint-git-main-rutvik-shivaji-bansodes-projects.vercel.app", // Keep the old domain if still in use
     ], // Frontend URL
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  methods: ["GET",
+    "POST",
+    "PATCH",
+    "PUT",
+    "DELETE",
+    "OPTIONS",],
   credentials: true // Allow credentials like cookies (if needed)
 }));
 
