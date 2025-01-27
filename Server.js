@@ -16,7 +16,10 @@ app.use(bodyParser.json()); // for JSON data
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(cors({
-  origin: "https://rutvik-foodappoint-git-main-rutvik-shivaji-bansodes-projects.vercel.app", // Frontend URL
+  origin:  [
+      "https://foodappoint-git-main-rutvik-shivaji-bansodes-projects.vercel.app", // Add your new frontend domain
+      "https://rutvik-foodappoint-git-main-rutvik-shivaji-bansodes-projects.vercel.app", // Keep the old domain if still in use
+    ], // Frontend URL
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true // Allow credentials like cookies (if needed)
 }));
