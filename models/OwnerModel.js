@@ -28,10 +28,24 @@ const appointmentSchema = new mongoose.Schema({
   price: {
     type: Number,
   },
-  Items: {
-    type: [String],
-    required: [true, "food item is required"],
-  },
+  Items: [
+    {
+      name: {
+        type: String,
+        required: true,
+      },
+      quantity: {
+        type: Number,
+        required: true,
+        min: [1, "Quantity must be at least 1"],
+      },
+      price: {
+        type: Number,
+        required: true,
+        min: [0, "Price must be positive"],
+      },
+    },
+  ],
   idd: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
