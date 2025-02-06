@@ -63,6 +63,7 @@ const appointmentSchema = new mongoose.Schema({
    isPaymentComplete: {
     type: Boolean,
     default: false, 
+    required: true, 
   },
 });
 
