@@ -39,11 +39,7 @@ const appointmentSchema = new mongoose.Schema({
         required: true,
         min: [1, "Quantity must be at least 1"],
       },
-      price: {
-        type: Number,
-        required: true,
-        min: [0, "Price must be positive"],
-      },
+     
     },
   ],
   idd: {
@@ -80,9 +76,7 @@ const menuSchema = new mongoose.Schema({
     type: Number,
     required: [true, "Menu item price is required"],
   },
-  category: {
-    type: String, 
-  },
+
 });
 
 
