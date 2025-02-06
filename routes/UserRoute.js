@@ -14,6 +14,7 @@ const {
   updatestatusappointmentController,
   OrderCreate,
   GetOrder,
+  paymentCompleteContoller,
 } = require("../controllers/UserCtrl");
 const { upload } = require("../middlewers/multer"); 
 
@@ -37,4 +38,5 @@ router.post("/removeappointment", removeAppointmentController);
 router.patch("/updatestatusappointment", updatestatusappointmentController);
 router.post("/orders",OrderCreate);
 router.get("/getorder",GetOrder);
+rrouter.post("/update-payment-status",paymentCompleteContoller);
 module.exports = router;
