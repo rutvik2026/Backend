@@ -575,6 +575,58 @@ const GetOrder = async(res,req)=>{
     }
 }
 
+const paymentCompleteContoller = async (req, res) => {
+   try {
+     const { userId, ownerId, uniqueId1, } = req.body;
+
+     if (!ownerId || !uniqueId1 || !userId ) {
+       return res.status(400).json({ message: "Missing required fields" });
+     }
+
+     
+     const owner = await ownerModel.findById(ownerId);
+     if (!owner) {
+       return res.status(404).json({ message: "Owner not found" });
+     }
+
+    
+     const appointment = owner.appointments.find(
+       (appt) => appt.uniqueId1 === uniqueId1
+     );
+     if (!appointment) {
+       return res.status(404).json({ message: "Appointment not found" });
+     }
+
+   
+     appointment.isPaymentComplete = true;
+
+     
+     const user = await userModel.findById(userId);
+     if (!user) {
+       return res.status(404).json({ message: "User not found" });
+     }
+
+     
+     const userAppointment = user.appointmentHistory.find(
+       (appt) => appt.appointmentId === uniqueId1
+     );
+    userAppointment.isPaymentComplete = true;
+
+     
+     await owner.save();
+     await user.save();
+
+     res.status(200).json({
+       message: "Payment status updated and added to appointment history",
+       appointment,
+       userHistory: user.appointmentHistory,
+     });
+   } catch (error) {
+     console.error("Error updating payment status:", error);
+     res.status(500).json({ message: "Server error", error });
+   }
+ };
+
 module.exports = {
   loginController,
   registerController,
@@ -590,4 +642,5 @@ module.exports = {
   updatestatusappointmentController,
   OrderCreate,
   GetOrder, 
+  paymentCompleteContoller,
 };
