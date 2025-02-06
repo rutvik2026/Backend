@@ -60,6 +60,10 @@ const appointmentSchema = new mongoose.Schema({
     contact:{
     type:String,
   },
+   isPaymentComplete: {
+    type: Boolean,
+    default: false, 
+  },
 });
 
 
