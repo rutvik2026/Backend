@@ -608,7 +608,7 @@ const paymentCompleteContoller = async (req, res) => {
 
      
      const userAppointment = user.appointmentHistory.find(
-       (appt) => appt.appointmentId === uniqueId1
+       (appt) => appt.uniqueId1 === uniqueId1
      );
     userAppointment.isPaymentComplete = true;
 
