@@ -38,5 +38,5 @@ router.post("/removeappointment", removeAppointmentController);
 router.patch("/updatestatusappointment", updatestatusappointmentController);
 router.post("/orders",OrderCreate);
 router.get("/getorder",GetOrder);
-rrouter.post("/update-payment-status",paymentCompleteContoller);
+router.post("/update-payment-status",paymentCompleteContoller);
 module.exports = router;
