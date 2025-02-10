@@ -1,5 +1,13 @@
 const mongoose = require("mongoose");
-
+const feedback=new mongoose.Schema({
+  name:String,
+  feedback:{
+    type:String,
+    require:[true],
+  },
+  ownerId:String,
+  username:String,
+})
 
 const appointmentSchema = new mongoose.Schema({
   uniqueId1: {
@@ -115,6 +123,7 @@ const ownerSchema = new mongoose.Schema({
   },
 });
 
+const fedModel = mongoose.model("Feed", feedback);
 
 const ownerModel = mongoose.model("Owner", ownerSchema);
 const menuModel = mongoose.model("Menu", menuSchema);
@@ -125,4 +134,5 @@ module.exports = {
   menuModel,
   appointmentModel,
   appointmentSchema ,
+  fedModel,
 };
