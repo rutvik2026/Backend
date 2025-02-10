@@ -627,6 +627,31 @@ const paymentCompleteContoller = async (req, res) => {
    }
  };
 
+const feedbackController= async(req, res) => {
+    try {
+      const { name, username, fed, ownerId } = req.body;
+      console.log("feed",req.body);
+      const feedback=await fedModel(req.body);
+     await feedback.save();
+     res.status(200).json({message:"Feedback send successfully"})
+    } catch (error) {
+      console.log("error in adding in feedback model",error);
+      res.status(500).json({message:"error in feed back 500",error});
+    }
+}
+const getFeedbackController=async(req,res)=>{
+ const ownerId = req.query?.ownerId;
+
+  try {
+    const feedback=await fedModel.findOne({ownerId:ownerId});
+    res.json({feedback});
+    
+  } catch (error) {
+    res.status(500).json({message:"error in getFeedbackController"});
+    console.log("error in getFeedbackController",error);
+  }
+}
+
 module.exports = {
   loginController,
   registerController,
@@ -643,4 +668,6 @@ module.exports = {
   OrderCreate,
   GetOrder, 
   paymentCompleteContoller,
+  feedbackController,
+  getFeedbackController,
 };
