@@ -6,6 +6,7 @@ const {
   ownerModel,
   menuModel,
   appointmentModel,
+  fedModel,
 } = require("../models/OwnerModel");
 const bcrypt=require('bcryptjs');
 const { uploadOnCoudinary } = require("../utill/Colaudinary.js");
