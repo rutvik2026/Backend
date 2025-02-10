@@ -644,8 +644,8 @@ const getFeedbackController=async(req,res)=>{
  const ownerId = req.query?.ownerId;
 
   try {
-    const feedback=await fedModel.findOne({ownerId:ownerId});
-    res.json({feedback});
+    const feedback=await fedModel.find({ownerId:ownerId});
+    res.json(feedback);
     
   } catch (error) {
     res.status(500).json({message:"error in getFeedbackController"});
