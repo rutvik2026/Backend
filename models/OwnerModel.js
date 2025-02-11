@@ -73,6 +73,9 @@ const appointmentSchema = new mongoose.Schema({
     default: false, 
     required: true, 
   },
+  otp:{
+    type:String,
+  }
 });
 
 
