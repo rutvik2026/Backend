@@ -50,6 +50,7 @@ const loginController=async(req,res)=>{
                           id:user.id,
                            role: "user", 
                            user: false, 
+                           email: user.email,
                          },
                        });
               }
