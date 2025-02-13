@@ -76,6 +76,12 @@ const appointmentSchema = new mongoose.Schema({
   otp:{
     type:String,
   }
+   email: {
+    type: String,
+  },
+  ownerEmail:{
+    type:String,
+  },
 });
 
 
