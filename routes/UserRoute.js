@@ -17,6 +17,7 @@ const {
   paymentCompleteContoller,
   feedbackController,
   getFeedbackController,
+  sendMailController,
 } = require("../controllers/UserCtrl");
 const { upload } = require("../middlewers/multer"); 
 
@@ -43,4 +44,5 @@ router.get("/getorder",GetOrder);
 router.post("/update-payment-status",paymentCompleteContoller);
 router.post("/feed",feedbackController);
 router.get("/getfeedback", getFeedbackController);
+router.post("/sendmassage",sendMailController);
 module.exports = router;
