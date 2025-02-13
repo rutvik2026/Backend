@@ -1,6 +1,8 @@
 const userModel=require('../models/userModels')
 const axios = require("axios");
 const crypto=require("crypto");
+require("dotenv").config();
+const nodemailer = require("nodemailer");
 const Razorpay = require("razorpay");
 const {
   ownerModel,
@@ -653,6 +655,32 @@ const getFeedbackController=async(req,res)=>{
   }
 }
 
+const transporter = nodemailer.createTransport({
+  service: "gmail", // You can use other providers like Outlook, Yahoo, or SMTP settings
+  auth: {
+    user: process.env.EMAIL, // Set in .env
+    pass: process.env.PASSWORD, // Set in .env (Use App Password for Gmail)
+  },
+});
+
+const sendMailController=async(req,res)=>{
+   const {to,subject,text}=req.body;
+   const mailOptions = {
+     from: process.env.EMAIL,
+     to,
+     subject,
+     text,
+   };
+
+   try {
+     let info = await transporter.sendMail(mailOptions);
+     console.log("Email sent: " + info.response);
+   } catch (error) {
+     console.error("Error sending email:", error);
+   }
+}
+
+
 module.exports = {
   loginController,
   registerController,
@@ -671,4 +699,5 @@ module.exports = {
   paymentCompleteContoller,
   feedbackController,
   getFeedbackController,
+  sendMailController,
 };
