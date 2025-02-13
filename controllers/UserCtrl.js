@@ -13,7 +13,7 @@ const {
 const bcrypt=require('bcryptjs');
 const { uploadOnCoudinary } = require("../utill/Colaudinary.js");
 const jwt= require('jsonwebtoken');
-require("dotenv").config();
+
 
 const loginController=async(req,res)=>{
        try {
