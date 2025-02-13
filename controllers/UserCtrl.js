@@ -665,23 +665,23 @@ const transporter = nodemailer.createTransport({
 });
 
 const sendMailController=async(req,res)=>{
-  
-console.log("mail option",mailOptions);
-   try {
-      const {to,subject,text}=req.body;
-  console.log("mail data",req.body);
+   const {to,subject,text}=req.body;
    const mailOptions = {
      from: process.env.EMAIL,
      to,
      subject,
      text,
    };
+
+   try {
      let info = await transporter.sendMail(mailOptions);
      console.log("Email sent: " + info.response);
    } catch (error) {
      console.error("Error sending email:", error);
    }
 }
+
+
 
 
 module.exports = {
