@@ -659,15 +659,15 @@ const getFeedbackController=async(req,res)=>{
 const transporter = nodemailer.createTransport({
   service: "gmail", // You can use other providers like Outlook, Yahoo, or SMTP settings
   auth: {
-    user: foodappoint@gmail.com, // Set in .env
-    pass: qmmu vqpb uqoh klbi, // Set in .env (Use App Password for Gmail)
+    user: "foodappoint@gmail.com", // Set in .env
+    pass:"qmmu vqpb uqoh klbi", // Set in .env (Use App Password for Gmail)
   },
 });
 
 const sendMailController=async(req,res)=>{
    const {to,subject,text}=req.body;
    const mailOptions = {
-     from: foodappoint@gmail.com,
+     from: "foodappoint@gmail.com",
      to,
      subject,
      text,
