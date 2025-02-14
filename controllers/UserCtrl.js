@@ -676,8 +676,10 @@ const sendMailController=async(req,res)=>{
    try {
      let info = await transporter.sendMail(mailOptions);
      console.log("Email sent: " + info.response);
+     res.status(200).json({success:true ,message:"email send successfully"});
    } catch (error) {
      console.error("Error sending email:", error);
+     res.status(200).json({success:false ,message:"error in email controller",error});
    }
 }
 
