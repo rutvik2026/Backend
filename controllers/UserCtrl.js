@@ -679,7 +679,7 @@ const sendMailController=async(req,res)=>{
      res.status(200).json({success:true ,message:"email send successfully"});
    } catch (error) {
      console.error("Error sending email:", error);
-     res.status(200).json({success:false ,message:"error in email controller",error,process.env.EMAIL, process.env.PASSWORD});
+     res.status(200).json({success:false ,message:`Erroe in mailController ${process.env.EMAIL} ${process.env.PASSWORD}`,error});
    }
 }
 
